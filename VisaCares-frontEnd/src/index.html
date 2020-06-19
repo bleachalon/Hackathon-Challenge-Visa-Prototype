@@ -1,14 +1,25 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>VisaCaresFrontEnd</title>
-  <base href="/">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-</head>
-<body>
-  <app-root></app-root>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>VisaCaresFrontEnd</title>
+    <base href="/" />
+    <button id="demo" onclick="myFunction()">Click me</button>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  </head>
+  <body>
+    <app-root></app-root>
+  </body>
 </html>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+<script>
+  function myFunction() {
+    document.getElementById("demo").innerHTML = "YOU CLICKED ME!";
+
+    let response = fetch("http://localhost:3000/api/sampleAPI");
+    let commits = response.json(); // read response body and parse as JSON
+    console.log(commits);
+  }
+</script>
