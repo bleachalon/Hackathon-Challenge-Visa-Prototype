@@ -1,0 +1,13 @@
+#checkout {
+    h3 { color: #4a4a4a;}
+    .amount-button {
+        button {
+            width: 130px;
+            
+            &:hover {
+                background-color: #031136;
+            }
+        }
+    }
+}
+
