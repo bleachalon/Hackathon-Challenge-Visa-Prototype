@@ -2,8 +2,11 @@ let express = require("express");
 
 let apiRouter = express.Router();
 
-let sampleController = require("./controller/sampleController");
 
-apiRouter.get("/sampleAPI", sampleController.querySampleController);
+let donationController = require("./controller/donationController")
+
+
+apiRouter.get("/donate", donationController.donateProcess);
+
 
 module.exports = apiRouter;
