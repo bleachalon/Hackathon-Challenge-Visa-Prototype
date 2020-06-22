@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "node-fetch": "^2.6.0"
+    "file-system": "^2.2.2",
+    "node-fetch": "^2.6.0",
+    "request": "^2.88.2"
   }
 }

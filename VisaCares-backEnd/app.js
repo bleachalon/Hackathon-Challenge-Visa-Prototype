@@ -1,7 +1,6 @@
 var express = require("express");
 
 let apiRouter = require("./api");
-let sampleController = require("./controller/sampleController");
 
 var app = express();
 
