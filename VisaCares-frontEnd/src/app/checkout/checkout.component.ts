@@ -23,6 +23,6 @@ export class CheckoutComponent implements OnInit {
       name: 'someone',
       organization: 'org',
       amount: '$1.00'
-    })
+    });
   }
 }
