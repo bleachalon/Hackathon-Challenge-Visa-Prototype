@@ -21,9 +21,12 @@
                 <option value="1">$1</option>
                 <option value="2">$1</option>
             </select> -->
-            <button class="btn btn-lg btn-outline-primary">$1 total:$20</button>
-            <button class="btn btn-lg btn-outline-primary">$2 total:$21</button>
-            <button class="btn btn-lg btn-outline-primary">$3 total:$22</button>
+            <button class="btn btn-lg btn-outline-primary" value="20" 
+                [class]="donation.value.amount == '20'? 'active' : ''" (click)="chooseAmount($event)">$1 total:$20</button>
+            <button class="btn btn-lg btn-outline-primary" value="21" 
+                [class]="donation.value.amount == '21'? 'active' : ''" (click)="chooseAmount($event)">$2 total:$21</button>
+            <button class="btn btn-lg btn-outline-primary" value="22" 
+                [class]="donation.value.amount == '22'? 'active' : ''" (click)="chooseAmount($event)">$3 total:$22</button>
         </div>
         <div class="d-flex justify-content-center mt-5">
             <img id="checkout-img" alt="Visa Checkout" class="col-sm-7 v-button" role="button"
