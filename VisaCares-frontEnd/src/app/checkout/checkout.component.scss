@@ -5,8 +5,12 @@
             width: 130px;
             
             &:hover {
-                background-color: #031136;
+                background-color: #092a85;
             }
+        }
+
+        .active {
+            background-color: #05184d;
         }
     }
 }
