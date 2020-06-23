@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CheckoutServices } from '../services/checkoutServices';
 
+declare const V;
+
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
@@ -17,6 +19,14 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+    this.loadVisaJS();
+  }
+
+  private loadVisaJS() {
+    var script = document.createElement("script");
+		script.setAttribute("type", "text/javascript");
+		script.setAttribute("src", "https://sandbox-assets.secure.checkout.visa.com/checkout-widget/resources/js/integration/v1/sdk.js");
+		document.getElementsByTagName("head")[0].appendChild(script);
   }
 
   private initForm() {
@@ -34,5 +44,26 @@ export class CheckoutComponent implements OnInit {
 
   submitDonation() {
     this.checkoutServices.postCheckoutInfo(this.donation.value);  
+  }
+
+
+  onVisaCheckoutReady(){
+    V.init( {
+    apikey: "96Y4RKXCVHAL5BSAHXOJ21WyORYdeyIXMRcWHAcHpHM6FnGdo",
+    encryptionKey: "K24R68T3DGGXEDWEG2RH13Tum02nyd4RACu_8otiJs8Mcv4Ec",
+    paymentRequest:{
+      currencyCode: "USD",
+      subtotal: this.donation.value.amount
+    }
+    });
+    V.on("payment.success", (payment) => this.sendEncrypt(payment));
+    V.on("payment.cancel", (payment) => console.log(payment));
+    V.on("payment.error", (payment) => console.log(payment));
+    }
+
+  private sendEncrypt(payment) {
+    const res = this.checkoutServices.sendEncrypt(payment);
+    console.log(res);
+    alert("payment success");
   }
 }
