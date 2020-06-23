@@ -80,7 +80,7 @@ class donationController {
 var data1 = {
   acquirerCountryCode: "840",
   acquiringBin: "408999",
-  amount: "124.05",
+  amount: "155",
   businessApplicationId: "AA",
   cardAcceptor: {
     address: {
@@ -133,7 +133,7 @@ var data1 = {
 var data2 = {
   acquirerCountryCode: "840",
   acquiringBin: "408999",
-  amount: "124.02",
+  amount: "155",
   businessApplicationId: "AA",
   cardAcceptor: {
     address: {
