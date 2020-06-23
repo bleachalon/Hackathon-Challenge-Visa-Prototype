@@ -3,14 +3,6 @@ const crypto = require('crypto');
 
 module.exports = function (app) {
 
-    async function visaCheckoutProcess(req, res) {
-        try {
-
-        } catch (err) {
-
-        }
-
-    }
 
     function decryptPayload(key, wrappedKey, payload) {
         let decryptedKey = decrypt(wrappedKey, key);
@@ -38,10 +30,13 @@ module.exports = function (app) {
 
     app.post("/visaCheckout", function (req, res) {
 
+        console.log("visaCheckout");
+
         var decryptedUser = decryptPayload("6UJUSKhXojn2kVJNVtIcodi0WzPdZLZUMNtfw$Lg", req.body.encKey, req.body.encPaymentData);
+        console.log(res.json(decryptedUser));
+
 
         res.json(decryptedUser);
-
 
     });
 
