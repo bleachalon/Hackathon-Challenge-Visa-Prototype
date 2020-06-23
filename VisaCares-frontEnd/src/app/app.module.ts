@@ -6,15 +6,12 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {ItemComponent, ItemsComponent} from './items/items.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    CheckoutComponent,
-    ItemsComponent,
-    ItemComponent
+    CheckoutComponent
   ],
   imports: [
     BrowserModule,
