@@ -33,8 +33,7 @@ module.exports = function (app) {
         console.log("visaCheckout");
 
         var decryptedUser = decryptPayload("6UJUSKhXojn2kVJNVtIcodi0WzPdZLZUMNtfw$Lg", req.body.encKey, req.body.encPaymentData);
-        console.log(res.json(decryptedUser));
-
+        // console.log(res.json(decryptedUser));
 
         res.json(decryptedUser);
 
