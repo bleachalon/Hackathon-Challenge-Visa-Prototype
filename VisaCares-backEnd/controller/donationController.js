@@ -11,16 +11,15 @@ const caFile = fs.readFileSync(jsonData.caFile);
 const headers = {
   "Content-Type": "application/json",
   Accept: "application/json",
-  Authorization:
-    "Basic " +
+  Authorization: "Basic " +
     new Buffer(jsonData.userId + ":" + jsonData.password).toString("base64"),
 };
 const request = require("request");
 
-module.exports = function(app) {
-  
-   async function donateProcess(req, res) {
-     try{
+module.exports = function (app) {
+
+  async function donateProcess(req, res) {
+    try {
       let donation = req.body;
 
       data1.amount = donation.amout;
@@ -28,9 +27,9 @@ module.exports = function(app) {
       console.log(donation);
       let res1 = await pushFunds();
       console.log("pushFunds", res1);
-     }catch(err){
+    } catch (err) {
 
-     }
+    }
 
     // let res2 = await pullFunds();
     // console.log("pullFunds", res2);
@@ -44,10 +43,8 @@ module.exports = function(app) {
 
   function pushFunds() {
     return new Promise(function (resolve, reject) {
-      request.post(
-        {
-          url:
-            "https://sandbox.api.visa.com/visadirect/fundstransfer/v1/pushfundstransactions",
+      request.post({
+          url: "https://sandbox.api.visa.com/visadirect/fundstransfer/v1/pushfundstransactions",
           key: keyFile,
           cert: certificateFile,
           ca: caFile,
@@ -67,10 +64,8 @@ module.exports = function(app) {
 
   function pullFunds() {
     return new Promise(function (resolve, reject) {
-      request.post(
-        {
-          uri:
-            "https://sandbox.api.visa.com/visadirect/fundstransfer/v1/pullfundstransactions",
+      request.post({
+          uri: "https://sandbox.api.visa.com/visadirect/fundstransfer/v1/pullfundstransactions",
           key: keyFile,
           cert: certificateFile,
           ca: caFile,
@@ -97,7 +92,7 @@ module.exports = function(app) {
 var data1 = {
   acquirerCountryCode: "840",
   acquiringBin: "408999",
-  amount: "124.05",
+  amount: "155",
   businessApplicationId: "AA",
   cardAcceptor: {
     address: {
@@ -150,7 +145,7 @@ var data1 = {
 var data2 = {
   acquirerCountryCode: "840",
   acquiringBin: "408999",
-  amount: "124.02",
+  amount: "155",
   businessApplicationId: "AA",
   cardAcceptor: {
     address: {

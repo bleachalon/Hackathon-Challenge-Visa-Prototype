@@ -11,7 +11,7 @@ app.get("/", function (req, res) {
 app.use(express.urlencoded());
 app.use(express.json());
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin",
         "*");
     res.header("Access-Control-Allow-Headers",
@@ -24,6 +24,10 @@ app.use(function(req, res, next) {
 
 let donationService = require('./controller/donationController');
 donationService(app)
+
+let visaCheckoutService = require('./controller/visaCheckoutController');
+visaCheckoutService(app);
+
 
 app.listen(3000, function () {
     console.log("Example app listening on port 3000!");
