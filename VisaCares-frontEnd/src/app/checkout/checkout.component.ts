@@ -10,7 +10,6 @@ declare const V;
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent implements OnInit {
-
   donation: any;
 
   constructor(
