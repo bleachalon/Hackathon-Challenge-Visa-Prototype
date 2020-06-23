@@ -2,7 +2,7 @@ const fs = require("fs");
 
 const jsonData = JSON.parse(
   fs.readFileSync(
-    "/Users/zhihao/Hackathon-Challenge-Visa/VisaCares-backEnd/controller/sandboxAPI/certValues.json"
+    "./sandboxAPI/certValues.json"
   )
 );
 const keyFile = fs.readFileSync(jsonData.keyFile);
@@ -17,26 +17,36 @@ const headers = {
 };
 const request = require("request");
 
-class donationController {
-  static async donateProcess(req, res) {
-    let res1 = await donationController.pushFunds();
-    console.log("pushFunds", res1);
+module.exports = function(app) {
+  
+   async function donateProcess(req, res) {
+     try{
+      let donation = req.body;
 
-    let res2 = await donationController.pullFunds();
-    console.log("pullFunds", res2);
+      data1.amount = donation.amout;
 
-    return res.status(200).json({
-      code: 1,
-      message: "success",
-      data: res2,
-    });
+      console.log(donation);
+      let res1 = await pushFunds();
+      console.log("pushFunds", res1);
+     }catch(err){
+
+     }
+
+    // let res2 = await pullFunds();
+    // console.log("pullFunds", res2);
+
+    // return res.status(200).json({
+    //   code: 1,
+    //   message: "success",
+    //   data: res2,
+    // });
   }
 
-  static pushFunds() {
+  function pushFunds() {
     return new Promise(function (resolve, reject) {
       request.post(
         {
-          uri:
+          url:
             "https://sandbox.api.visa.com/visadirect/fundstransfer/v1/pushfundstransactions",
           key: keyFile,
           cert: certificateFile,
@@ -54,7 +64,8 @@ class donationController {
       );
     });
   }
-  static pullFunds() {
+
+  function pullFunds() {
     return new Promise(function (resolve, reject) {
       request.post(
         {
@@ -76,7 +87,13 @@ class donationController {
       );
     });
   }
+
+
+  app.post("/donate", donateProcess);
 }
+
+
+
 var data1 = {
   acquirerCountryCode: "840",
   acquiringBin: "408999",
@@ -184,4 +201,3 @@ var data2 = {
   },
   visaMerchantIdentifier: "73625198",
 };
-module.exports = donationController;

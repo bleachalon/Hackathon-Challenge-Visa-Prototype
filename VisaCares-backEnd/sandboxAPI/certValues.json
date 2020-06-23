@@ -1,0 +1,7 @@
+{
+	"certificateFile" : "./sandboxAPI/cert.pem",
+	"keyFile" : "./sandboxAPI/key_433892fe-5d7d-472e-aec9-15d825214c05.pem",
+	"caFile" : "./sandboxAPI/DigiCertGlobalRootCA.cer",
+	"userId" : "OLXEWEW0NUFP51K1SO3621fXoxf94NfDZS9g5N6ci_L4TnVMY",
+	"password" : "TrT63uReo6Scn385t2x"
+}

@@ -24,7 +24,7 @@ export class CheckoutComponent implements OnInit {
     this.donation = this.formBuilder.group({
       name: '(optional)',
       organization: '',
-      amount: 'Customized donation amount'
+      amount: '0'
     })
   }
 
@@ -32,4 +32,8 @@ export class CheckoutComponent implements OnInit {
     this.donation.value.amount = event.target.value;
     console.log(this.donation.value);
   } 
+
+  submitDonation() {
+    this.checkoutServices.postCheckoutInfo(this.donation.value);  
+  }
 }
