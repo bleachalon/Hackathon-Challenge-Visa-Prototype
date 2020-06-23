@@ -1,12 +1,12 @@
-let express = require("express");
+// let express = require("express");
 
-let apiRouter = express.Router();
-
-
-let donationController = require("./controller/donationController")
+// let apiRouter = express.Router();
 
 
-apiRouter.get("/donate", donationController.donateProcess);
+// let donationController = require("./controller/donationController")
 
 
-module.exports = apiRouter;
+// apiRouter.post("/donate", donationController.donateProcess);
+
+
+// module.exports = apiRouter;
