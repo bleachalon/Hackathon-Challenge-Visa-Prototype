@@ -7,12 +7,14 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CheckoutServices } from './services/checkoutServices';
+import { HomeComponent } from './HomePage/home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
