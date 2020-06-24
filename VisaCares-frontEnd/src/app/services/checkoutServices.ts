@@ -14,10 +14,10 @@ export class CheckoutServices {
 
     sendEncrypt(payment: any) {
         console.log(payment);
-        fetch(this.url + 'visaCheckout', {
+        return fetch(this.url + 'visaCheckout', {
             method: 'POST',
             body: JSON.stringify(payment),
             headers: { 'content-type': 'application/json' }
-        }).then(res => { return res.json(); });
+        }).then(res => { return res; });
     }
 }
