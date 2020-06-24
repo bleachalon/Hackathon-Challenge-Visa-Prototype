@@ -19,6 +19,7 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Methods",
         "GET, POST, PUT, DELETE, OPTIONS");
     res.header("Access-Control-Allow-Credentials", "true");
+
     next();
 });
 
@@ -27,6 +28,8 @@ donationService(app)
 
 let visaCheckoutService = require('./controller/visaCheckoutController');
 visaCheckoutService(app);
+let visauserValidateService = require('./controller/userInfoController');
+visauserValidateService(app);
 
 
 app.listen(3000, function () {
