@@ -33,7 +33,18 @@ module.exports = function (app) {
         console.log("visaCheckout");
 
         var decryptedUser = decryptPayload("6UJUSKhXojn2kVJNVtIcodi0WzPdZLZUMNtfw$Lg", req.body.encKey, req.body.encPaymentData);
-        // console.log(res.json(decryptedUser));
+        //console.log(res.json(decryptedUser));
+
+        console.log(decryptedUser);
+
+        /*-----------------
+
+        Put Visa Direct call into here^^^
+        The "decryptedUser" variable is a json with all the necessary info so just parse and make
+        the pull/push call
+
+        ------------------*/
+
 
         res.json(decryptedUser);
 

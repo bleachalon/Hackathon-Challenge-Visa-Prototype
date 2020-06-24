@@ -62,9 +62,18 @@ export class CheckoutComponent implements OnInit {
     V.on("payment.error", (payment) => console.log(payment));
     }
 
-  private sendEncrypt(payment) {
-    const res = this.checkoutServices.sendEncrypt(payment);
-    console.log(res);
-    alert("payment success");
+  private async sendEncrypt(payment) {
+    try {
+      var res;
+      res = await this.checkoutServices.sendEncrypt(payment);
+      console.log(res);
+      if (res.ok === true) {
+        alert("Payment Success!");
+        console.log(res.json());
+      }
+    }
+    catch(err) {
+      alert(err);
+    }
   }
 }
