@@ -7,6 +7,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CheckoutServices } from './services/checkoutServices';
+import { HomeComponent } from './HomePage/home/home.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ConfirmationComponent } from './navbar/confirmation/confirmation.component';
@@ -22,6 +23,7 @@ import { AccountServices } from './services/accountServices';
     AppComponent,
     NavbarComponent,
     CheckoutComponent,
+    HomeComponent,
     HomepageComponent,
     ConfirmationComponent,
     AccountComponent,
