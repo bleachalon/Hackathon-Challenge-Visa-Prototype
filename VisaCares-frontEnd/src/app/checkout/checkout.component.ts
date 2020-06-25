@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CheckoutServices } from '../services/checkoutServices';
+import { ActivatedRoute } from '@angular/router';
+import {MatDialog} from '@angular/material/dialog';
+import { ConfirmationComponent } from '../navbar/confirmation/confirmation.component';
+
+
 
 declare const V;
 
@@ -10,17 +15,20 @@ declare const V;
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent implements OnInit {
-
   donation: any;
+  total: number;
 
   constructor(
     private formBuilder: FormBuilder,
-    private checkoutServices: CheckoutServices
+    private checkoutServices: CheckoutServices,
+    private route: ActivatedRoute,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
     this.initForm();
     this.loadVisaJS();
+    this.total = parseInt(this.route.snapshot.paramMap.get('price'));
   }
 
   private loadVisaJS() {
@@ -34,12 +42,12 @@ export class CheckoutComponent implements OnInit {
     this.donation = this.formBuilder.group({
       name: '(optional)',
       organization: '',
-      amount: '0'
+      amount: 0
     })
   }
 
   chooseAmount(event: any) {
-    this.donation.value.amount = event.target.value;
+    this.donation.value.amount = event.target.value - this.total;
     console.log(this.donation.value);
   } 
 
@@ -47,6 +55,23 @@ export class CheckoutComponent implements OnInit {
     this.checkoutServices.postCheckoutInfo(this.donation.value);  
   }
 
+  confirmPayment(){
+    if(this.donation.value.amount == 0) { alert('please enter an amount of none 0'); return; }
+
+    const dialogRef = this.dialog.open(ConfirmationComponent, {
+      maxWidth: "400px",
+      data: {
+          title: "Are you sure?",
+          message: "You are about to DONATE!",
+          amount: this.donation.value.amount
+        }
+    });
+  
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      if(dialogResult == true) { console.log('1'); this.onVisaCheckoutReady(); }
+   });
+  
+  }
 
   onVisaCheckoutReady(){
     V.init( {

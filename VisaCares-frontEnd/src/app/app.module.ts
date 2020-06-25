@@ -7,18 +7,28 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CheckoutServices } from './services/checkoutServices';
+import { HomepageComponent } from './homepage/homepage.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ConfirmationComponent } from './navbar/confirmation/confirmation.component';
+import {MatCardModule} from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    HomepageComponent,
+    ConfirmationComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatCardModule,
+    MatDialogModule
   ],
   providers: [
     CheckoutServices

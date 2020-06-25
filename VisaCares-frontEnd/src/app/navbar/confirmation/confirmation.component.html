@@ -1,0 +1,12 @@
+<mat-card fxLayoutGap>
+
+    <p mat-dialog-title>{{data.title}}</p>
+
+    <p display-2>{{data.message}} ${{data.amount}}</p>
+
+
+    <div mat-dialog-actions class="row justify-content-between px-3">
+        <button class= "btn btn-secondary" (click)="onDismiss()">No</button>
+        <button class= "btn btn-secondary" (click)="onConfirm()">Yes</button>
+    </div>
+</mat-card>
