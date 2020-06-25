@@ -20,28 +20,50 @@ module.exports = function (app) {
 
   async function donateProcess(req, res) {
     try {
+      var donatorData = {};
+      var transactionData = {};
+
       let donation = req.body;
 
       data1.amount = donation.amout;
 
+      /*
+      req payload will populate donatorData
+      */
+
       console.log(donation);
-      let res1 = await pushFunds();
-      console.log("pushFunds", res1);
+
+      let res1 = await pullFunds(donatorData);
+      console.log("pullFunds", res1);
+
+      /*
+      res1 and req payload will populate transactionData
+      */
+
+      let res2 = await pushFunds(transactionData);
+      console.log("pushFunds", res2);
+
+      return res.status(200).json({
+        code: 1,
+        message: "success",
+        data: res2,
+      });
     } catch (err) {
-
+        return res.status(405).json({
+          code: 2,
+          message: "fail",
+          data: err
+      });
     }
-
-    // let res2 = await pullFunds();
-    // console.log("pullFunds", res2);
-
-    // return res.status(200).json({
-    //   code: 1,
-    //   message: "success",
-    //   data: res2,
-    // });
   }
 
-  function pushFunds() {
+  function pushFunds(transactionData) {
+    /*
+    transactionData is the data from the previous pullFunds function
+    The transactionData will be used to populate the json payload in the pushFunds api
+    In addition with the transactionData, there will be data for the chosen donation place most likely through another api call
+    This function will return the transaction id along with the response status
+    */
     return new Promise(function (resolve, reject) {
       request.post({
           url: "https://sandbox.api.visa.com/visadirect/fundstransfer/v1/pushfundstransactions",
@@ -62,7 +84,12 @@ module.exports = function (app) {
     });
   }
 
-  function pullFunds() {
+  function pullFunds(donatorData) {
+    /*
+    donatorData is a json that contains that donator's credit card information
+    The donatorData json will be used to populate the json payload in the pullFund api
+    This function will return the response of the pullFunds api
+    */
     return new Promise(function (resolve, reject) {
       request.post({
           uri: "https://sandbox.api.visa.com/visadirect/fundstransfer/v1/pullfundstransactions",
@@ -85,9 +112,23 @@ module.exports = function (app) {
 
 
   app.post("/donate", donateProcess);
-}
+};
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+//Hard coded payload values from sandbox.
+//Must use these values inorder to obtain a response back from sandbox api
 
 var data1 = {
   acquirerCountryCode: "840",
