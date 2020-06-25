@@ -1,21 +1,40 @@
 body {
     margin: 2px;
     padding: 2px;
-    width: 400px;
-    height: 60px;
+    width: 300px;
     padding: 16px 16px;
-    background: rgba(98, 180, 207, 0.3);
 
 }
 
+h1 {
+    font-family: myriad-pro, sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    color: #1A1F71;
+}
+
+p {
+    font-family: myriad-pro, sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+}
+
+#message {
+    font-weight: bold;
+}
+
+
 button {
-    background-color: #00008b;
+    background-color: #1A1F71;
     border-radius: 28px;
-    border: 1px solid #00008b;
+    border: 1px solid #ffffff;
     display: inline-block;
     cursor: pointer;
     color: #ffffff;
-    font-family: Arial;
+    font-family: myriad-pro, sans-serif;
+    font-style: normal;
+    font-weight: 300;
     font-size: 13px;
     padding: 10px 10px;
     text-decoration: none;
@@ -23,5 +42,27 @@ button {
 }
 
 button:hover {
-    background-color: #0c0cff;
+    /*background-color: #0c0cff;*/
+    background-color: #F7B600;
+}
+
+.loader {
+  border: 3px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 3px solid #000;
+  width: 10px;
+  height: 10px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

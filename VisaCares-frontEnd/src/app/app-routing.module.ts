@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: '', component: HomeComponent},
   { path: 'home', component: HomeComponent},
   { path: 'checkout', component: CheckoutComponent}
+  { path: 'checkout/:price', component: CheckoutComponent}
 ];
 
 @NgModule({
