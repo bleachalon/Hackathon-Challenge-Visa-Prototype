@@ -12,6 +12,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ConfirmationComponent } from './navbar/confirmation/confirmation.component';
 import {MatCardModule} from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
+import { AccountComponent } from './account/account.component';
+import { SigninComponent } from './account/signin/signin.component';
+import { RegisterComponent } from './account/register/register.component';
+import { AccountServices } from './services/accountServices';
 
 @NgModule({
   declarations: [
@@ -19,7 +23,10 @@ import { MatDialogModule } from '@angular/material/dialog';
     NavbarComponent,
     CheckoutComponent,
     HomepageComponent,
-    ConfirmationComponent
+    ConfirmationComponent,
+    AccountComponent,
+    SigninComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +38,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatDialogModule
   ],
   providers: [
-    CheckoutServices
+    CheckoutServices,
+    AccountServices,
   ],
   bootstrap: [AppComponent]
 })
