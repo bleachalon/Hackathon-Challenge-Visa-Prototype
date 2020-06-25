@@ -1,23 +1,62 @@
 const pdftk = require("node-pdftk");
+var hummus = require("hummus"),
+    PDFDigitalForm = require("./pdf-digital-form");
+let fs = require("fs");
+var util = require("util");
+var pdfParser = hummus.createReader("./controller/myfile.pdf"); // the path to the pdf file
+var digitalForm = new PDFDigitalForm(pdfParser);
+var pdfFiller = require("pdffiller");
 
 module.exports = function (app) {
-    function taxformfill(req, res) {
+    async function taxformfill(req, res) {
+
+
+        // if (digitalForm.hasForm()) {
+        //     fs.writeFileSync(
+        //         "./controller/fields.json",
+        //         JSON.stringify(digitalForm.fields, null, 4)
+        //     );
+        // }
+        var sourcePdf = "./controller/myfile.pdf";
+        var destinationPDF = "./controller/myfile222.pdf"
+        // use the "name" field in the json
+        var data = {
+            "topmostSubform[0].Page1[0].Table1[0].Line1B[0].f1_6[0]": "lollolololololololololo"
+        };
+
+        console.log("taxformfill")
+
+        var res = await fillPdf(sourcePdf, destinationPDF, data);
+
         // pdftk
-        //   .input("./myfile.pdf")
-        //   .fillForm({
-        //     some: "data",
-        //     to: "fill",
-        //     the: "form",
-        //   })
-        //   .flatten()
-        //   .output("./myfile2.pdf")
-        //   .then((buffer) => {
-        //     // Do stuff with the output buffer
-        //   })
-        //   .catch((err) => {
-        //     // handle errors
-        //   });
+        //     .input(sourcePdf).fillForm({
+        //         some: data,
+        //         to: 'fill',
+        //         the: 'form'
+        //     })
+        //     .stamp()
+        //     .output(destinationPD)
+        //     .then(buffer => {
+        //         // Do stuff with the output buffer
+        //     })
+        //     .catch(err => {
+        //         // handle errors
+        //     });
+
+
+
+        console.log("lol")
     }
 
+    function fillPdf(sourcePdf, destPdf, data) {
+        return new Promise((resolve, reject) => {
+            pdfFiller.fillFormWithFlatten(sourcePdf, destPdf, data, true, function (
+                err
+            ) {
+                if (err) reject(err);
+                resolve();
+            });
+        });
+    }
     app.post("/taxform", taxformfill);
 };
