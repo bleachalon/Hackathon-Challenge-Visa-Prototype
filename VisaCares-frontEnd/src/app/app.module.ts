@@ -19,7 +19,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     AppComponent,
     NavbarComponent,
     CheckoutComponent,
-    HomeComponent
+    HomeComponent,
     HomepageComponent,
     ConfirmationComponent
   ],
