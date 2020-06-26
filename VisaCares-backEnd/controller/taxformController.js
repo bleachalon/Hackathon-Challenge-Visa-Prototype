@@ -21,7 +21,28 @@ module.exports = function (app) {
         var destinationPDF = "./controller/myfile222.pdf"
         // use the "name" field in the json
         var data = {
-            "topmostSubform[0].Page1[0].Table1[0].Line1B[0].f1_6[0]": "lollolololololololololo"
+
+            //address 
+            "topmostSubform[0].Page1[0].Table1[0].Line1A[0].f1_3[0]": "123 N Happy Drive",
+
+            //Donor's cost or adjustec basis
+            "topmostSubform[0].Page1[0].Pg1Table2[0].Line1A[0].f1_21[0]": "11111111",
+            //fair market value
+            "topmostSubform[0].Page1[0].Pg1Table2[0].Line1A[0].f1_22[0]": "2222222 ",
+            // How queiry By donor 
+            "topmostSubform[0].Page1[0].Pg1Table2[0].Line1A[0].f1_20[0]": "33333333333",
+
+            //date
+            "topmostSubform[0].Page1[0].Pg1Table2[0].Line1A[0].f1_19[0]": "May 20 2020",
+
+            //date
+            "topmostSubform[0].Page1[0].Pg1Table2[0].Line1A[0].f1_18[0]": "May 20 2020",
+
+
+            "topmostSubform[0].Page1[0].f1_48[0]": "A",
+
+            //subtotal
+            "topmostSubform[0].Page1[0].f1_49[0]": "100"
         };
 
         console.log("taxformfill")
