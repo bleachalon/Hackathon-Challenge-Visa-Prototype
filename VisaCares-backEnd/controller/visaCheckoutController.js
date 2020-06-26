@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const donator = require('./donationController');
 
 
 module.exports = function (app) {
@@ -44,13 +45,11 @@ module.exports = function (app) {
         the pull/push call
 
         ------------------*/
+        donator.donateProcess(decryptedUser);
 
 
         res.json(decryptedUser);
 
     });
-
-
-
 
 }

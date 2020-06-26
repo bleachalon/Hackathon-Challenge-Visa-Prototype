@@ -12,118 +12,102 @@ const headers = {
   "Content-Type": "application/json",
   Accept: "application/json",
   Authorization: "Basic " +
-    new Buffer(jsonData.userId + ":" + jsonData.password).toString("base64"),
+    new Buffer( jsonData.userId + ":" +  jsonData.password).toString("base64"),
 };
 const request = require("request");
 
-module.exports = function (app) {
+async function donateProcess(req) {
+  console.log("test donation");
+  try {
+    var donatorData = {};
+    var transactionData = {};
 
-  async function donateProcess(req, res) {
-    try {
-      var donatorData = {};
-      var transactionData = {};
+    let donation = req.body;
 
-      let donation = req.body;
+    data1.amount = donation.amount;
 
-      data1.amount = donation.amout;
-
-      /*
-      req payload will populate donatorData
-      */
-
-      console.log(donation);
-
-      let res1 = await pullFunds(donatorData);
-      console.log("pullFunds", res1);
-
-      /*
-      res1 and req payload will populate transactionData
-      */
-
-      let res2 = await pushFunds(transactionData);
-      console.log("pushFunds", res2);
-
-      return res.status(200).json({
-        code: 1,
-        message: "success",
-        data: res2,
-      });
-    } catch (err) {
-        return res.status(405).json({
-          code: 2,
-          message: "fail",
-          data: err
-      });
-    }
-  }
-
-  function pushFunds(transactionData) {
     /*
-    transactionData is the data from the previous pullFunds function
-    The transactionData will be used to populate the json payload in the pushFunds api
-    In addition with the transactionData, there will be data for the chosen donation place most likely through another api call
-    This function will return the transaction id along with the response status
+    req payload will populate donatorData
     */
-    return new Promise(function (resolve, reject) {
-      request.post({
-          url: "https://sandbox.api.visa.com/visadirect/fundstransfer/v1/pushfundstransactions",
-          key: keyFile,
-          cert: certificateFile,
-          ca: caFile,
-          headers: headers,
-          json: data1,
-        },
-        function (error, res, body) {
-          if (!error && res.statusCode == 200) {
-            resolve(body);
-          } else {
-            reject(error);
-          }
-        }
-      );
-    });
-  }
 
-  function pullFunds(donatorData) {
+    console.log(donation);
+
+    let res1 = await pullFunds(donatorData);
+    console.log("pullFunds", res1);
+
     /*
-    donatorData is a json that contains that donator's credit card information
-    The donatorData json will be used to populate the json payload in the pullFund api
-    This function will return the response of the pullFunds api
+    res1 and req payload will populate transactionData
     */
-    return new Promise(function (resolve, reject) {
-      request.post({
-          uri: "https://sandbox.api.visa.com/visadirect/fundstransfer/v1/pullfundstransactions",
-          key: keyFile,
-          cert: certificateFile,
-          ca: caFile,
-          headers: headers,
-          json: data2,
-        },
-        function (error, res, body) {
-          if (!error && res.statusCode == 200) {
-            resolve(body);
-          } else {
-            reject(error);
-          }
-        }
-      );
-    });
+
+    let res2 = await pushFunds(transactionData);
+    console.log("pushFunds", res2);
+
+    return {
+      status: "success",
+      data: res2
+    };
+  } catch (err) {
+      return {
+        status: "fail",
+        data: res2
+      };
   }
+}
 
+function pushFunds(transactionData) {
+  /*
+  transactionData is the data from the previous pullFunds function
+  The transactionData will be used to populate the json payload in the pushFunds api
+  In addition with the transactionData, there will be data for the chosen donation place most likely through another api call
+  This function will return the transaction id along with the response status
+  */
+  return new Promise(function (resolve, reject) {
+    request.post({
+        url: "https://sandbox.api.visa.com/visadirect/fundstransfer/v1/pushfundstransactions",
+        key: keyFile,
+        cert: certificateFile,
+        ca: caFile,
+        headers: headers,
+        json: data1,
+      },
+      function (error, res, body) {
+        if (!error && res.statusCode == 200) {
+          resolve(body);
+        } else {
+          reject(error);
+        }
+      }
+    );
+  });
+}
 
-  app.post("/donate", donateProcess);
-};
+function pullFunds(donatorData) {
+  /*
+  donatorData is a json that contains that donator's credit card information
+  The donatorData json will be used to populate the json payload in the pullFund api
+  This function will return the response of the pullFunds api
+  */
+  return new Promise(function (resolve, reject) {
+    request.post({
+        uri: "https://sandbox.api.visa.com/visadirect/fundstransfer/v1/pullfundstransactions",
+        key: keyFile,
+        cert: certificateFile,
+        ca: caFile,
+        headers: headers,
+        json: data2,
+      },
+      function (error, res, body) {
+        if (!error && res.statusCode == 200) {
+          resolve(body);
+        } else {
+          reject(error);
+        }
+      }
+    );
+  });
+}
 
-
-
-
-
-
-
-
-
-
-
+module.exports.donateProcess = donateProcess;
 
 
 

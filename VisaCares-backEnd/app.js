@@ -23,9 +23,6 @@ app.use(function (req, res, next) {
     next();
 });
 
-let donationService = require('./controller/donationController');
-donationService(app)
-
 let visaCheckoutService = require('./controller/visaCheckoutController');
 visaCheckoutService(app);
 let visauserValidateService = require('./controller/userInfoController');
