@@ -49,10 +49,10 @@ export class CheckoutComponent implements OnInit {
   chooseAmount(event: any) {
     this.donation.value.amount = event.target.value - this.total;
     console.log(this.donation.value);
-  } 
+  }
 
   submitDonation() {
-    this.checkoutServices.postCheckoutInfo(this.donation.value);  
+    this.checkoutServices.postCheckoutInfo(this.donation.value);
   }
 
   confirmPayment(){
@@ -62,15 +62,17 @@ export class CheckoutComponent implements OnInit {
       maxWidth: "400px",
       data: {
           title: "Are you sure?",
-          message: "You are about to DONATE!",
-          amount: this.donation.value.amount
+          message: "You are about to donate $" + this.donation.value.amount + "?",
+          hide: false
         }
     });
-  
+
     dialogRef.afterClosed().subscribe(dialogResult => {
-      if(dialogResult == true) { console.log('1'); this.onVisaCheckoutReady(); }
-   });
-  
+      if(dialogResult == true){
+        //console.log('1');
+        this.onVisaCheckoutReady();
+      }
+    });
   }
 
   onVisaCheckoutReady(){
@@ -85,7 +87,20 @@ export class CheckoutComponent implements OnInit {
     V.on("payment.success", (payment) => this.sendEncrypt(payment));
     V.on("payment.cancel", (payment) => console.log(payment));
     V.on("payment.error", (payment) => console.log(payment));
-    }
+   }
+
+  finishedPayment(){
+    alert("piece of shit");
+    const dialogRef = this.dialog.open(ConfirmationComponent, {
+          maxWidth: "600px",
+          data: {
+              title: "Thank you",
+              message: "Thank you for donating to charity",
+              amount: this.donation.value.amount,
+              hide: true
+            }
+        });
+  }
 
   private async sendEncrypt(payment) {
     try {
@@ -95,6 +110,7 @@ export class CheckoutComponent implements OnInit {
       if (res.ok === true) {
         alert("Payment Success!");
         console.log(res.json());
+        this.finishedPayment();
       }
     }
     catch(err) {

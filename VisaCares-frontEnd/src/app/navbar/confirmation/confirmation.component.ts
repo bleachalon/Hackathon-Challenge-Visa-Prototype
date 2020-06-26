@@ -5,6 +5,7 @@ export interface DialogData {
     title: string;
     message: string;
     amount: number;
+    hide: boolean;
 }
 
 @Component({
@@ -14,10 +15,10 @@ export interface DialogData {
 })
 export class ConfirmationComponent implements OnInit {
 
-  dialogData: DialogData;
-  title:string;
-  message:string;
-  amount: number;
+    dialogData: DialogData;
+    title:string;
+    message:string;
+    amount: number;
 
     constructor(
         public dialogRef: MatDialogRef<ConfirmationComponent>,

@@ -1,11 +1,11 @@
 <mat-card fxLayoutGap>
-
+    <button class="close" mat-button (click)="onDismiss()">X</button>
     <p mat-dialog-title>{{data.title}}</p>
 
-    <p display-2>{{data.message}} ${{data.amount}}</p>
+    <p display-2>{{data.message}}</p>
 
 
-    <div mat-dialog-actions class="row justify-content-between px-3">
+    <div mat-dialog-actions *ngIf="!data.hide" class="row justify-content-between px-3">
         <button class= "btn btn-secondary" (click)="onDismiss()">No</button>
         <button class= "btn btn-secondary" (click)="onConfirm()">Yes</button>
     </div>
