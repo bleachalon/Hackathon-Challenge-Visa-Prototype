@@ -1,0 +1,7 @@
+<section class="transactions container">
+    <h1 class="row justify-content-center my-5">Your Donation History!</h1>
+    <ul class="list-group list-group-flush col-sm-12">
+        <li class="list-group-item d-flex justify-content-between" *ngFor="let tran of transactions?.data"
+            ><p class="amount">${{tran?.amount}} </p> <p>{{tran?.date | date:'medium'}}</p></li>
+    </ul>
+</section>

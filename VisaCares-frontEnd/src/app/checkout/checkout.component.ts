@@ -4,6 +4,7 @@ import { CheckoutServices } from '../services/checkoutServices';
 import { ActivatedRoute } from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import { ConfirmationComponent } from '../navbar/confirmation/confirmation.component';
+import { AccountServices } from '../services/accountServices';
 
 
 
@@ -22,7 +23,8 @@ export class CheckoutComponent implements OnInit {
     private formBuilder: FormBuilder,
     private checkoutServices: CheckoutServices,
     private route: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private accountServices: AccountServices
   ) { }
 
   ngOnInit(): void {
@@ -42,7 +44,8 @@ export class CheckoutComponent implements OnInit {
     this.donation = this.formBuilder.group({
       name: '(optional)',
       organization: '',
-      amount: 0
+      amount: 0,
+      date: ''
     })
   }
 
@@ -89,10 +92,12 @@ export class CheckoutComponent implements OnInit {
 
   private async sendEncrypt(payment) {
     try {
+      var today = new Date();
       var res;
       res = await this.checkoutServices.sendEncrypt(payment);
       console.log(res);
       if (res.ok === true) {
+        this.accountServices.postTransaction({amount: payment, date: String(today.getDate())})
         alert("Payment Success!");
         console.log(res.json());
       }
