@@ -2,18 +2,19 @@ const fs = require("fs");
 
 const jsonData = JSON.parse(
   fs.readFileSync(
-    "./sandboxAPI/certValues.json"
+    __dirname + "/sandboxAPI/certValues.json"
   )
 );
-const keyFile = fs.readFileSync(jsonData.keyFile);
-const certificateFile = fs.readFileSync(jsonData.certificateFile);
-const caFile = fs.readFileSync(jsonData.caFile);
+const keyFile = fs.readFileSync( __dirname + jsonData.keyFile);
+const certificateFile = fs.readFileSync( __dirname + jsonData.certificateFile);
+const caFile = fs.readFileSync( __dirname + jsonData.caFile);
 const headers = {
   "Content-Type": "application/json",
   Accept: "application/json",
   Authorization: "Basic " +
-    new Buffer( jsonData.userId + ":" +  jsonData.password).toString("base64"),
+    new Buffer( __dirname+jsonData.userId + ":" +  __dirname+jsonData.password).toString("base64"),
 };
+
 const request = require("request");
 
 async function donateProcess(req) {
@@ -22,16 +23,11 @@ async function donateProcess(req) {
     var donatorData = {};
     var transactionData = {};
 
-    let donation = req.body;
-
-    data1.amount = donation.amount;
-
     /*
     req payload will populate donatorData
     */
 
-    console.log(donation);
-
+    console.log("step1");
     let res1 = await pullFunds(donatorData);
     console.log("pullFunds", res1);
 
@@ -39,17 +35,18 @@ async function donateProcess(req) {
     res1 and req payload will populate transactionData
     */
 
+    console.log("step2");
     let res2 = await pushFunds(transactionData);
     console.log("pushFunds", res2);
 
     return {
       status: "success",
-      data: res2
+      data: "res2"
     };
   } catch (err) {
       return {
         status: "fail",
-        data: res2
+        data: "res2"
       };
   }
 }
@@ -62,6 +59,7 @@ function pushFunds(transactionData) {
   This function will return the transaction id along with the response status
   */
   return new Promise(function (resolve, reject) {
+    console.log("pushfunds");
     request.post({
         url: "https://sandbox.api.visa.com/visadirect/fundstransfer/v1/pushfundstransactions",
         key: keyFile,
@@ -72,8 +70,10 @@ function pushFunds(transactionData) {
       },
       function (error, res, body) {
         if (!error && res.statusCode == 200) {
+          console.log(body);
           resolve(body);
         } else {
+          console.log(error);
           reject(error);
         }
       }
@@ -88,6 +88,7 @@ function pullFunds(donatorData) {
   This function will return the response of the pullFunds api
   */
   return new Promise(function (resolve, reject) {
+    console.log("pullfunds");
     request.post({
         uri: "https://sandbox.api.visa.com/visadirect/fundstransfer/v1/pullfundstransactions",
         key: keyFile,
@@ -98,8 +99,11 @@ function pullFunds(donatorData) {
       },
       function (error, res, body) {
         if (!error && res.statusCode == 200) {
+          console.log(body);
           resolve(body);
         } else {
+          console.log("error");
+          console.log(error);
           reject(error);
         }
       }
@@ -110,11 +114,11 @@ function pullFunds(donatorData) {
 module.exports.donateProcess = donateProcess;
 
 
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Hard coded payload values from sandbox.
 //Must use these values inorder to obtain a response back from sandbox api
 
-var data1 = {
+const data1 = {
   acquirerCountryCode: "840",
   acquiringBin: "408999",
   amount: "155",
@@ -167,7 +171,7 @@ var data1 = {
   },
 };
 
-var data2 = {
+const data2 = {
   acquirerCountryCode: "840",
   acquiringBin: "408999",
   amount: "155",

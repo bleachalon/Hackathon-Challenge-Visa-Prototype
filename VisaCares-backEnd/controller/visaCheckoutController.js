@@ -45,11 +45,16 @@ module.exports = function (app) {
         the pull/push call
 
         ------------------*/
-        donator.donateProcess(decryptedUser);
+        let donationData = donator.donateProcess(decryptedUser);
 
 
         res.json(decryptedUser);
 
     });
 
+    app.get("/visaTest", function (req, res) {
+
+        donator.donateProcess({});
+
+    });
 }
