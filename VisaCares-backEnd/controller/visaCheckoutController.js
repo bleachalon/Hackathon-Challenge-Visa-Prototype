@@ -55,6 +55,9 @@ module.exports = function (app) {
         the pull/push call
 
         ------------------*/
+
+        //Used to pass data between requests.
+        //Currently unused due to specific payload of visa direct sandbox
         var donatorData = {};
         var transactionData = {};
 
@@ -81,7 +84,8 @@ module.exports = function (app) {
         rest of data can be pre populated
         */
 
-        let res1 = await pullFunds(donatorData);
+        //let res1 = await pullFunds(donatorData);
+        let res1 = await pullFunds(data2);
         console.log("pullFunds", res1);
 
         /*
@@ -108,7 +112,8 @@ module.exports = function (app) {
         rest of data can be pre populated
         */
 
-        let res2 = await pushFunds(transactionData);
+        //let res2 = await pushFunds(transactionData);
+        let res2 = await pushFunds(data1);
         console.log("pushFunds", res2);
 
         res.json(decryptedUser);
@@ -123,7 +128,7 @@ module.exports = function (app) {
                     cert: certificateFile,
                     ca: caFile,
                     headers: headers,
-                    json: data1,
+                    json: transactionData,
                 },
                 function (error, res, body) {
                     if (!error && res.statusCode == 200) {
@@ -145,7 +150,7 @@ module.exports = function (app) {
                     cert: certificateFile,
                     ca: caFile,
                     headers: headers,
-                    json: data2,
+                    json: donatorData,
                 },
                 function (error, res, body) {
                     if (!error && res.statusCode == 200) {
