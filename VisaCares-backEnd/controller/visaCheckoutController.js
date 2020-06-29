@@ -39,6 +39,51 @@ module.exports = function (app) {
         return decryptedData;
     }
 
+    function pushFunds(transactionData) {
+        return new Promise(function (resolve, reject) {
+            request.post({
+                    url: "https://sandbox.api.visa.com/visadirect/fundstransfer/v1/pushfundstransactions",
+                    key: keyFile,
+                    cert: certificateFile,
+                    ca: caFile,
+                    headers: headers,
+                    json: transactionData,
+                },
+                function (error, res, body) {
+                    if (!error && res.statusCode == 200) {
+                        resolve(body);
+                    } else {
+                        console.log("push error is ", error);
+                        reject(error);
+                    }
+                }
+            );
+        });
+    }
+    
+    function pullFunds(donatorData) {
+        return new Promise(function (resolve, reject) {
+            request.post({
+                    uri: "https://sandbox.api.visa.com/visadirect/fundstransfer/v1/pullfundstransactions",
+                    key: keyFile,
+                    cert: certificateFile,
+                    ca: caFile,
+                    headers: headers,
+                    json: donatorData,
+                },
+                function (error, res, body) {
+                    if (!error && res.statusCode == 200) {
+                        resolve(body);
+                    } else {
+                        console.log("pullFunds error is ", error);
+
+                        reject(error);
+                    }
+                }
+            );
+        });
+    }
+
     app.post("/visaCheckout", async function (req, res) {
 
         console.log("visaCheckout");
@@ -119,52 +164,6 @@ module.exports = function (app) {
         res.json(decryptedUser);
         res.status("success");
     });
-
-    function pushFunds(transactionData) {
-        return new Promise(function (resolve, reject) {
-            request.post({
-                    url: "https://sandbox.api.visa.com/visadirect/fundstransfer/v1/pushfundstransactions",
-                    key: keyFile,
-                    cert: certificateFile,
-                    ca: caFile,
-                    headers: headers,
-                    json: transactionData,
-                },
-                function (error, res, body) {
-                    if (!error && res.statusCode == 200) {
-                        resolve(body);
-                    } else {
-                        console.log("push error is ", error);
-                        reject(error);
-                    }
-                }
-            );
-        });
-    }
-
-    function pullFunds(donatorData) {
-        return new Promise(function (resolve, reject) {
-            request.post({
-                    uri: "https://sandbox.api.visa.com/visadirect/fundstransfer/v1/pullfundstransactions",
-                    key: keyFile,
-                    cert: certificateFile,
-                    ca: caFile,
-                    headers: headers,
-                    json: donatorData,
-                },
-                function (error, res, body) {
-                    if (!error && res.statusCode == 200) {
-                        resolve(body);
-                    } else {
-                        console.log("pullFunds error is ", error);
-
-                        reject(error);
-                    }
-                }
-            );
-        });
-    }
-
 }
 
 var data1 = {
