@@ -55,13 +55,64 @@ module.exports = function (app) {
         the pull/push call
 
         ------------------*/
+        var donatorData = {};
+        var transactionData = {};
+
+        /*
+        req payload will populate donatorData
+
+        donatorData["acquirerCountryCode"] = req.paymentInstrument.billingAddress.countryCode;
+        donatorData["acquiringBin"] = req.paymentInstrument.binSixDigits;
+        donatorData["amount"] = req.paymentRequest.subtotal;
+        donatorData["businessApplicationId"] = "AA";
+        donatorData["cardAcceptor"]["address"]["country"] = req.paymentInstrument.billingAddress.countryCode;
+        donatorData["cardAcceptor"]["address"]["county"] = "";//lack of data;
+        donatorData["cardAcceptor"]["address"]["state"] = req.paymentInstrument.billingAddress.stateProvinceCode;
+        donatorData["cardAcceptor"]["address"]["zipCode"] = req.paymentInstrument.billingAddress.postalCode;
+        donatorData["cardAcceptor"]["idCode"] = "";
+        donatorData["cardAcceptor"]["name"] = req.paymentInstrument.billingAddress.personName;
+        donatorData["cardAcceptor"]["terminalId"]= "";
+        donatorData["senderPrimaryAccountNumber"] = req.paymentInstrument.billingAddress.id;
+        donatorData["senderCurrencyCode"] = "USD";
+        donatorData["senderCardExpiryDate"] = req.expirationDate.Year + "-" + req.expirationDate.Year;
+        donatorData["addressVerificationData"]["street"] = req.paymentInstrument.billingAddress.line1;
+        donatorData["addressVerificationData"]["postalCode"]= req.paymentInstrument.billingAddress.postalCode;
+
+        rest of data can be pre populated
+        */
+
         let res1 = await pushFunds();
         console.log("pushFunds", res1);
+
+        /*
+        res1 and req payload will populate transactionData
+
+        transactionData["acquirerCountryCode"] = req.paymentInstrument.billingAddress.countryCode;
+        transactionData["acquiringBin"] = req.paymentInstrument.binSixDigits;
+        transactionData["amount"] = req.paymentRequest.subtotal;
+        transactionData["businessApplicationId"] = "AA";
+        transactionData["cardAcceptor"]["address"]["country"] = donator data from db
+        transactionData["cardAcceptor"]["address"]["county"] = donator data from db
+        transactionData["cardAcceptor"]["address"]["state"] = donator data from db
+        transactionData["cardAcceptor"]["address"]["zipCode"] = donator data from db
+        transactionData["recipientName"]= donator data from db
+        transactionData["recipientPrimaryAccountNumber"]= donator data from db
+        transactionData["retrievalReferenceNumber"]= res1.transactionIndentifier
+        transactionData["senderAccountNumber"] = donator data from db
+        transactionData["senderCity"] = donator data from db
+        transactionData["senderCountryCode"] = donator data from db
+        transactionData["senderName"] = donator data from db
+        transactionData["senderReference"] = donator data from db
+        transactionData["senderStateCode"] = donator data from db
+
+        rest of data can be pre populated
+        */
+
         let res2 = await pullFunds();
         console.log("pullFunds", res2);
 
         res.json(decryptedUser);
-
+        res.status("success");
     });
 
 
