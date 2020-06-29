@@ -81,7 +81,7 @@ module.exports = function (app) {
         rest of data can be pre populated
         */
 
-        let res1 = await pushFunds();
+        let res1 = await pushFunds(donatorData);
         console.log("pushFunds", res1);
 
         /*
@@ -108,15 +108,14 @@ module.exports = function (app) {
         rest of data can be pre populated
         */
 
-        let res2 = await pullFunds();
+        let res2 = await pullFunds(transactionData);
         console.log("pullFunds", res2);
 
         res.json(decryptedUser);
         res.status("success");
     });
 
-
-    function pushFunds() {
+    function pushFunds(transactionData) {
         return new Promise(function (resolve, reject) {
             request.post({
                     url: "https://sandbox.api.visa.com/visadirect/fundstransfer/v1/pushfundstransactions",
@@ -138,7 +137,7 @@ module.exports = function (app) {
         });
     }
 
-    function pullFunds() {
+    function pullFunds(donatorData) {
         return new Promise(function (resolve, reject) {
             request.post({
                     uri: "https://sandbox.api.visa.com/visadirect/fundstransfer/v1/pullfundstransactions",
@@ -179,7 +178,7 @@ var data1 = {
         "name": "Visa Inc. USA-Foster City",
         "terminalId": "TID-9999"
     },
-    "localTransactionDateTime": "2020-06-29T01:16:33",
+    "localTransactionDateTime": "2020-06-29T15:06:17",
     "merchantCategoryCode": "6012",
     "pointOfServiceData": {
         "motoECIIndicator": "0",
@@ -233,7 +232,7 @@ var data2 = {
     },
     "cavv": "0700100038238906000013405823891061668252",
     "foreignExchangeFeeTransaction": "11.99",
-    "localTransactionDateTime": "2020-06-29T01:16:33",
+    "localTransactionDateTime": "2020-06-29T15:06:17",
     "retrievalReferenceNumber": "330000550000",
     "senderCardExpiryDate": "2015-10",
     "senderCurrencyCode": "USD",
