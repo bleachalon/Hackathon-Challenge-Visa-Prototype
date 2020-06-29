@@ -89,6 +89,9 @@ module.exports = function (app) {
 
   app.post("/donate", donateProcess);
 };
+
+
+
 var data1 = {
   "acquirerCountryCode": "840",
   "acquiringBin": "408999",
