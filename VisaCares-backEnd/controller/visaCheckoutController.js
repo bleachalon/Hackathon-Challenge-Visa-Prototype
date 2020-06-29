@@ -81,8 +81,8 @@ module.exports = function (app) {
         rest of data can be pre populated
         */
 
-        let res1 = await pushFunds(donatorData);
-        console.log("pushFunds", res1);
+        let res1 = await pullFunds(donatorData);
+        console.log("pullFunds", res1);
 
         /*
         res1 and decryptedUser payload will populate transactionData
@@ -108,8 +108,8 @@ module.exports = function (app) {
         rest of data can be pre populated
         */
 
-        let res2 = await pullFunds(transactionData);
-        console.log("pullFunds", res2);
+        let res2 = await pushFunds(transactionData);
+        console.log("pushFunds", res2);
 
         res.json(decryptedUser);
         res.status("success");
