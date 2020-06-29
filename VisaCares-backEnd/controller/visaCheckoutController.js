@@ -12,9 +12,8 @@ const headers = {
         new Buffer(jsonData.userId + ":" + jsonData.password).toString("base64"),
 };
 const request = require("request");
+
 module.exports = function (app) {
-
-
     function decryptPayload(key, wrappedKey, payload) {
         let decryptedKey = decrypt(wrappedKey, key);
         let decryptedMsg = decrypt(payload, decryptedKey);
@@ -60,7 +59,7 @@ module.exports = function (app) {
             );
         });
     }
-    
+
     function pullFunds(donatorData) {
         return new Promise(function (resolve, reject) {
             request.post({
@@ -160,9 +159,15 @@ module.exports = function (app) {
         //let res2 = await pushFunds(transactionData);
         let res2 = await pushFunds(data1);
         console.log("pushFunds", res2);
+        
+        var responsePayload = {
+            userInfo: decryptedUser,
+            pullFunds: res1,
+            pushFunds: res2
+        }
 
-        res.json(decryptedUser);
-        res.status("success");
+        res.json(responsePayload);
+        res.status(200);
     });
 }
 
