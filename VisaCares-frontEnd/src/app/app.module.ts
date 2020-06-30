@@ -17,6 +17,7 @@ import { AccountComponent } from './account/account.component';
 import { SigninComponent } from './account/signin/signin.component';
 import { RegisterComponent } from './account/register/register.component';
 import { AccountServices } from './services/accountServices';
+import { TransactionsComponent } from './account/transactions/transactions.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { AccountServices } from './services/accountServices';
     ConfirmationComponent,
     AccountComponent,
     SigninComponent,
-    RegisterComponent
+    RegisterComponent,
+    TransactionsComponent
   ],
   imports: [
     BrowserModule,

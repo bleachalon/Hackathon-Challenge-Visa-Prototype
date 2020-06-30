@@ -15,7 +15,7 @@ export class AccountServices {
     url="http://localhost:3000/";
 
     signin(user) {
-       return fetch(this.url + 'signin', {
+       return fetch(this.url + 'uservalidate', {
             method: 'POST',
             body: JSON.stringify(user),
             headers: { 'content-type': 'application/json' }
@@ -29,4 +29,17 @@ export class AccountServices {
             headers: { 'content-type': 'application/json' }
         }).then( res => res);
     }
+
+    postTransaction(tran) {
+        fetch(this.url + 'transactions/insert', {
+            method: 'POST',
+            body: JSON.stringify(tran),
+            headers: { 'content-type': 'application/json' }
+            }).then( res => res);
+    }
+
+    getTransaction() {
+        return fetch(this.url + 'transactions').then(res => res.json());
+    }
+
 }
