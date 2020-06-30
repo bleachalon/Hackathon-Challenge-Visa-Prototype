@@ -6,6 +6,7 @@ var util = require("util");
 var pdfParser = hummus.createReader("./controller/myfile.pdf"); // the path to the pdf file
 var digitalForm = new PDFDigitalForm(pdfParser);
 var pdfFiller = require("pdffiller");
+const express = require("express");
 
 module.exports = function (app) {
     async function taxformfill(req, res) {
@@ -66,7 +67,9 @@ module.exports = function (app) {
 
 
 
-        console.log("lol")
+        console.log("lol");
+
+
     }
 
     function fillPdf(sourcePdf, destPdf, data) {
@@ -79,5 +82,11 @@ module.exports = function (app) {
             });
         });
     }
-    app.post("/taxform", taxformfill);
+    app.post("/taxform", function (req, res) {
+
+        taxformfill();
+        res.sendFile(__dirname + "/" + req.body.filename);
+
+
+    });
 };
