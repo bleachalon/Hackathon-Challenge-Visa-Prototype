@@ -48,7 +48,6 @@ export class CheckoutComponent implements OnInit {
 
   chooseAmount(event: any) {
     this.donation.value.amount = event.target.value - this.total;
-    console.log(this.donation.value);
   }
 
   submitDonation() {
@@ -69,7 +68,6 @@ export class CheckoutComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(dialogResult => {
       if(dialogResult == true){
-        //console.log('1');
         this.onVisaCheckoutReady();
       }
     });
@@ -90,7 +88,6 @@ export class CheckoutComponent implements OnInit {
    }
 
   finishedPayment(){
-    alert("piece of shit");
     const dialogRef = this.dialog.open(ConfirmationComponent, {
           maxWidth: "600px",
           data: {
@@ -106,10 +103,7 @@ export class CheckoutComponent implements OnInit {
     try {
       var res;
       res = await this.checkoutServices.sendEncrypt(payment);
-      console.log(res);
       if (res.ok === true) {
-        alert("Payment Success!");
-        console.log(res.json());
         this.finishedPayment();
       }
     }
