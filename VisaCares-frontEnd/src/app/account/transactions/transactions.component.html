@@ -1,0 +1,34 @@
+<section class="transactions container">
+    <h1 class="row justify-content-center my-5">Your Transactions</h1>
+    <mat-tab-group mat-stretch-tabs animationDuration="0ms">
+	  <mat-tab>
+	    <ng-template mat-tab-label>
+	      History
+	    </ng-template>
+	    <ul class="list-group list-group-flush col-sm-12">
+        <li class="list-group-item d-flex justify-content-between" *ngFor="let tran of transactions?.data"
+            ><p class="amount">${{tran?.amount}} </p> <p>{{tran?.date | date:'medium'}}</p></li>
+    	</ul>
+	  </mat-tab>
+
+	  <mat-tab>
+	    <ng-template mat-tab-label>
+	      Visualization
+	    </ng-template>
+	    <h3 class = "total" style="margin-top:50px;text-align:center;margin-bottom: 35px">Your donation total is ${{sum}}!</h3>
+
+	    <div style="display: block;width:70%;margin: auto;">
+		    <canvas baseChart width="400" height="400"
+		                [datasets]="lineChartData"
+		                [labels]="lineChartLabels"
+		                [options]="lineChartOptions"
+		                [colors]="lineChartColors"
+		                [legend]="lineChartLegend"
+		                [chartType]="lineChartType"
+		                [plugins]="lineChartPlugins"
+		                (chartHover)="chartHovered($event)"
+		                (chartClick)="chartClicked($event)"></canvas>
+		 </div>
+	  </mat-tab>
+	</mat-tab-group>
+</section>

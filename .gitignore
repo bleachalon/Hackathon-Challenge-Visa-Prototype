@@ -1,2 +1,3 @@
 VisaCares-backEnd/controller/sandboxAPI/*
 VisaCares-backEnd/node_modules/*
+**/.DS_Store

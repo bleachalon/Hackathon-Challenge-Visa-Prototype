@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AccountServices } from '../services/accountServices';
+import { MatDialog } from '@angular/material/dialog';
+import { SigninComponent } from '../account/signin/signin.component';
+import { RegisterComponent } from '../account/register/register.component';
 
 @Component({
   selector: 'app-navbar',
@@ -7,9 +11,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public accountServices: AccountServices,
+    private dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
+    if(this.accountServices.login == false) { this.openLogin(); }
   }
 
+  openLogin() {
+    const dialogRef = this.dialog.open(SigninComponent, {
+      maxWidth: '600px'
+    });
+  }
+
+  openRegister() {
+    this.dialog.open(RegisterComponent, {
+      maxWidth: '600px'
+    })
+  }
 }

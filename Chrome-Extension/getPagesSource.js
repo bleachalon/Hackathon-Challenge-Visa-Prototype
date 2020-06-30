@@ -31,12 +31,12 @@ function DOMtoString(document_root) {
     var stringAmount = html.substring(index + szie + 2, index + szie + 80)
     var indexEnd = stringAmount.indexOf("</td>")
 
-    return stringAmount.substring(0, indexEnd);
+    return stringAmount.substring(0, indexEnd).trim();
 }
 
 function myFunction() {
 
-    console.log("lol");
+    console.log("Test");
 
 }
 
