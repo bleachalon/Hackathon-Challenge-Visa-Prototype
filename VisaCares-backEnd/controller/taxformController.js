@@ -1,10 +1,10 @@
 const pdftk = require("node-pdftk");
-var hummus = require("hummus"),
-    PDFDigitalForm = require("./pdf-digital-form");
+//var hummus = require("hummus"),
+    //PDFDigitalForm = require("./pdf-digital-form");
 let fs = require("fs");
 var util = require("util");
-var pdfParser = hummus.createReader("./controller/myfile.pdf"); // the path to the pdf file
-var digitalForm = new PDFDigitalForm(pdfParser);
+//var pdfParser = hummus.createReader("./controller/myfile.pdf"); // the path to the pdf file
+//var digitalForm = new PDFDigitalForm(pdfParser);
 var pdfFiller = require("pdffiller");
 const express = require("express");
 

@@ -83,7 +83,8 @@ export class CheckoutComponent implements OnInit {
     paymentRequest:{
       currencyCode: "USD",
       subtotal: this.donation.value.amount
-    }
+    },
+    dataLevel: "FULL"
     });
     V.on("payment.success", (payment) => this.sendEncrypt(payment));
     V.on("payment.cancel", (payment) => console.log(payment));
