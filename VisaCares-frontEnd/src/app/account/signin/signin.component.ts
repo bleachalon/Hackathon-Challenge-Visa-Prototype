@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class SigninComponent implements OnInit {
   user:any;
+  status: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<SigninComponent>,
@@ -39,8 +40,9 @@ export class SigninComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  signin() {
-    this.accountSerivces.signin(this.user.value);
-    this.dialogRef.close();
+  async signin() {
+    const res = await this.accountSerivces.signin(this.user.value);
+    if (res.status != 200) { this.status = true; }
+    if (res.status == 200) { this.accountSerivces.login = true; this.dialogRef.close(); }
   }
 }

@@ -10,7 +10,7 @@ module.exports = function (app) {
                 message: "success"
             });
         } else {
-            return res.status(200).json({
+            return res.status(400).json({
                 code: 2,
                 message: "fail"
             });

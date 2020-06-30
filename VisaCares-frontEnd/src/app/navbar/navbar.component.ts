@@ -12,7 +12,7 @@ import { RegisterComponent } from '../account/register/register.component';
 export class NavbarComponent implements OnInit {
 
   constructor(
-    private accountServices: AccountServices,
+    public accountServices: AccountServices,
     private dialog: MatDialog
   ) { }
 
