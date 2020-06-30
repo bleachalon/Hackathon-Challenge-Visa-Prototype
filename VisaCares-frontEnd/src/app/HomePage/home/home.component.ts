@@ -1,5 +1,5 @@
 import { Component, OnInit, NgModule } from '@angular/core';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+// import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 
 
