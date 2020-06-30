@@ -18,6 +18,8 @@ import { SigninComponent } from './account/signin/signin.component';
 import { RegisterComponent } from './account/register/register.component';
 import { AccountServices } from './services/accountServices';
 import { TransactionsComponent } from './account/transactions/transactions.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { TransactionsComponent } from './account/transactions/transactions.compo
     AppRoutingModule,
     BrowserAnimationsModule,
     MatCardModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTabsModule,
+    ChartsModule
   ],
   providers: [
     CheckoutServices,
