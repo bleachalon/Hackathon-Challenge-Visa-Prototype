@@ -12,9 +12,8 @@ const headers = {
         new Buffer(jsonData.userId + ":" + jsonData.password).toString("base64"),
 };
 const request = require("request");
+
 module.exports = function (app) {
-
-
     function decryptPayload(key, wrappedKey, payload) {
         let decryptedKey = decrypt(wrappedKey, key);
         let decryptedMsg = decrypt(payload, decryptedKey);
@@ -39,6 +38,51 @@ module.exports = function (app) {
         return decryptedData;
     }
 
+    function pushFunds(transactionData) {
+        return new Promise(function (resolve, reject) {
+            request.post({
+                    url: "https://sandbox.api.visa.com/visadirect/fundstransfer/v1/pushfundstransactions",
+                    key: keyFile,
+                    cert: certificateFile,
+                    ca: caFile,
+                    headers: headers,
+                    json: transactionData,
+                },
+                function (error, res, body) {
+                    if (!error && res.statusCode == 200) {
+                        resolve(body);
+                    } else {
+                        console.log("push error is ", error);
+                        reject(error);
+                    }
+                }
+            );
+        });
+    }
+
+    function pullFunds(donatorData) {
+        return new Promise(function (resolve, reject) {
+            request.post({
+                    uri: "https://sandbox.api.visa.com/visadirect/fundstransfer/v1/pullfundstransactions",
+                    key: keyFile,
+                    cert: certificateFile,
+                    ca: caFile,
+                    headers: headers,
+                    json: donatorData,
+                },
+                function (error, res, body) {
+                    if (!error && res.statusCode == 200) {
+                        resolve(body);
+                    } else {
+                        console.log("pullFunds error is ", error);
+
+                        reject(error);
+                    }
+                }
+            );
+        });
+    }
+
     app.post("/visaCheckout", async function (req, res) {
 
         console.log("visaCheckout");
@@ -55,41 +99,45 @@ module.exports = function (app) {
         the pull/push call
 
         ------------------*/
+
+        //Used to pass data between requests.
+        //Currently unused due to specific payload of visa direct sandbox
         var donatorData = {};
         var transactionData = {};
 
         /*
-        req payload will populate donatorData
+        decryptedUser payload will populate donatorData
 
-        donatorData["acquirerCountryCode"] = req.paymentInstrument.billingAddress.countryCode;
-        donatorData["acquiringBin"] = req.paymentInstrument.binSixDigits;
-        donatorData["amount"] = req.paymentRequest.subtotal;
+        donatorData["acquirerCountryCode"] = decryptedUser.paymentInstrument.billingAddress.countryCode;
+        donatorData["acquiringBin"] = decryptedUser.paymentInstrument.binSixDigits;
+        donatorData["amount"] = decryptedUser.paymentRequest.subtotal;
         donatorData["businessApplicationId"] = "AA";
-        donatorData["cardAcceptor"]["address"]["country"] = req.paymentInstrument.billingAddress.countryCode;
+        donatorData["cardAcceptor"]["address"]["country"] = decryptedUser.paymentInstrument.billingAddress.countryCode;
         donatorData["cardAcceptor"]["address"]["county"] = "";//lack of data;
-        donatorData["cardAcceptor"]["address"]["state"] = req.paymentInstrument.billingAddress.stateProvinceCode;
-        donatorData["cardAcceptor"]["address"]["zipCode"] = req.paymentInstrument.billingAddress.postalCode;
+        donatorData["cardAcceptor"]["address"]["state"] = decryptedUser.paymentInstrument.billingAddress.stateProvinceCode;
+        donatorData["cardAcceptor"]["address"]["zipCode"] = decryptedUser.paymentInstrument.billingAddress.postalCode;
         donatorData["cardAcceptor"]["idCode"] = "";
-        donatorData["cardAcceptor"]["name"] = req.paymentInstrument.billingAddress.personName;
+        donatorData["cardAcceptor"]["name"] = decryptedUser.paymentInstrument.billingAddress.personName;
         donatorData["cardAcceptor"]["terminalId"]= "";
-        donatorData["senderPrimaryAccountNumber"] = req.paymentInstrument.billingAddress.id;
+        donatorData["senderPrimaryAccountNumber"] = decryptedUser.paymentInstrument.billingAddress.id;
         donatorData["senderCurrencyCode"] = "USD";
-        donatorData["senderCardExpiryDate"] = req.expirationDate.Year + "-" + req.expirationDate.Year;
-        donatorData["addressVerificationData"]["street"] = req.paymentInstrument.billingAddress.line1;
-        donatorData["addressVerificationData"]["postalCode"]= req.paymentInstrument.billingAddress.postalCode;
+        donatorData["senderCardExpiryDate"] = decryptedUser.expirationDate.Year + "-" + decryptedUser.expirationDate.Year;
+        donatorData["addressVerificationData"]["street"] = decryptedUser.paymentInstrument.billingAddress.line1;
+        donatorData["addressVerificationData"]["postalCode"]= decryptedUser.paymentInstrument.billingAddress.postalCode;
 
         rest of data can be pre populated
         */
 
-        let res1 = await pushFunds();
-        console.log("pushFunds", res1);
+        //let res1 = await pullFunds(donatorData);
+        let res1 = await pullFunds(data2);
+        console.log("pullFunds", res1);
 
         /*
-        res1 and req payload will populate transactionData
+        res1 and decryptedUser payload will populate transactionData
 
-        transactionData["acquirerCountryCode"] = req.paymentInstrument.billingAddress.countryCode;
-        transactionData["acquiringBin"] = req.paymentInstrument.binSixDigits;
-        transactionData["amount"] = req.paymentRequest.subtotal;
+        transactionData["acquirerCountryCode"] = decryptedUser.paymentInstrument.billingAddress.countryCode;
+        transactionData["acquiringBin"] = decryptedUser.paymentInstrument.binSixDigits;
+        transactionData["amount"] = decryptedUser.paymentRequest.subtotal;
         transactionData["businessApplicationId"] = "AA";
         transactionData["cardAcceptor"]["address"]["country"] = donator data from db
         transactionData["cardAcceptor"]["address"]["county"] = donator data from db
@@ -108,59 +156,19 @@ module.exports = function (app) {
         rest of data can be pre populated
         */
 
-        let res2 = await pullFunds();
-        console.log("pullFunds", res2);
+        //let res2 = await pushFunds(transactionData);
+        let res2 = await pushFunds(data1);
+        console.log("pushFunds", res2);
+        
+        var responsePayload = {
+            userInfo: decryptedUser,
+            pullFunds: res1,
+            pushFunds: res2
+        }
 
-        res.json(decryptedUser);
-        res.status("success");
+        res.json(responsePayload);
+        res.status(200);
     });
-
-
-    function pushFunds() {
-        return new Promise(function (resolve, reject) {
-            request.post({
-                    url: "https://sandbox.api.visa.com/visadirect/fundstransfer/v1/pushfundstransactions",
-                    key: keyFile,
-                    cert: certificateFile,
-                    ca: caFile,
-                    headers: headers,
-                    json: data1,
-                },
-                function (error, res, body) {
-                    if (!error && res.statusCode == 200) {
-                        resolve(body);
-                    } else {
-                        console.log("push error is ", error);
-                        reject(error);
-                    }
-                }
-            );
-        });
-    }
-
-    function pullFunds() {
-        return new Promise(function (resolve, reject) {
-            request.post({
-                    uri: "https://sandbox.api.visa.com/visadirect/fundstransfer/v1/pullfundstransactions",
-                    key: keyFile,
-                    cert: certificateFile,
-                    ca: caFile,
-                    headers: headers,
-                    json: data2,
-                },
-                function (error, res, body) {
-                    if (!error && res.statusCode == 200) {
-                        resolve(body);
-                    } else {
-                        console.log("pullFunds error is ", error);
-
-                        reject(error);
-                    }
-                }
-            );
-        });
-    }
-
 }
 
 var data1 = {
@@ -179,7 +187,7 @@ var data1 = {
         "name": "Visa Inc. USA-Foster City",
         "terminalId": "TID-9999"
     },
-    "localTransactionDateTime": "2020-06-29T01:16:33",
+    "localTransactionDateTime": "2020-06-29T15:06:17",
     "merchantCategoryCode": "6012",
     "pointOfServiceData": {
         "motoECIIndicator": "0",
@@ -233,7 +241,7 @@ var data2 = {
     },
     "cavv": "0700100038238906000013405823891061668252",
     "foreignExchangeFeeTransaction": "11.99",
-    "localTransactionDateTime": "2020-06-29T01:16:33",
+    "localTransactionDateTime": "2020-06-29T15:06:17",
     "retrievalReferenceNumber": "330000550000",
     "senderCardExpiryDate": "2015-10",
     "senderCurrencyCode": "USD",
