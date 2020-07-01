@@ -59,6 +59,8 @@ export class CheckoutComponent implements OnInit {
   }
 
   confirmPayment(){
+    // var today = new Date();
+    // console.log(String(today))
     if(this.donation.value.amount == 0) {
       this.dialog.open(ConfirmationComponent, {
         panelClass: 'myapp-no-padding-dialog',
@@ -92,9 +94,9 @@ export class CheckoutComponent implements OnInit {
       var today = new Date();
       var res;
       res = await this.checkoutServices.sendEncrypt(payment);
-      console.log(res);
       if (res.ok === true) {
-        this.accountServices.postTransaction({amount: payment, date: String(today.getDate())})
+        // console.log(payment.vInitRequest.paymentRequest.subtotal)
+        this.accountServices.postTransaction({amount: payment.vInitRequest.paymentRequest.subtotal, date: String(today)})
         this.dialog.open(ConfirmationComponent, {
           panelClass: 'myapp-no-padding-dialog',
           data: {

@@ -4,7 +4,6 @@ var json2 = require('./data/transaction.json'); //(with path)
 module.exports = function (app) {
     function validateUser(req, res) {
         if (req.body.username == json.username && req.body.password == json.password) {
-            console.log(json);
             return res.status(200).json({
                 code: 1,
                 message: "success"
@@ -34,6 +33,8 @@ module.exports = function (app) {
             amount: req.body.amount,
             date: req.body.date
         }
+
+        console.log(tmp);
 
         transactionData.push(tmp)
         return res.status(200).json({
