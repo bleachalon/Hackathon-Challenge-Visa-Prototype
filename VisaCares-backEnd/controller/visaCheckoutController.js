@@ -85,12 +85,12 @@ module.exports = function (app) {
 
     app.post("/visaCheckout", async function (req, res) {
 
-        console.log("visaCheckout");
+        // console.log("visaCheckout");
 
         var decryptedUser = decryptPayload("6UJUSKhXojn2kVJNVtIcodi0WzPdZLZUMNtfw$Lg", req.body.encKey, req.body.encPaymentData);
         //console.log(res.json(decryptedUser));
 
-        console.log(decryptedUser);
+        // console.log(decryptedUser);
 
         /*-----------------
 
@@ -130,7 +130,7 @@ module.exports = function (app) {
 
         //let res1 = await pullFunds(donatorData);
         let res1 = await pullFunds(data2);
-        console.log("pullFunds", res1);
+        // console.log("pullFunds", res1);
 
         /*
         res1 and decryptedUser payload will populate transactionData
@@ -158,7 +158,7 @@ module.exports = function (app) {
 
         //let res2 = await pushFunds(transactionData);
         let res2 = await pushFunds(data1);
-        console.log("pushFunds", res2);
+        // console.log("pushFunds", res2);
         
         var responsePayload = {
             userInfo: decryptedUser,

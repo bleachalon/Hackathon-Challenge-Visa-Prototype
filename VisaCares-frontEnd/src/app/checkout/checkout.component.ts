@@ -58,6 +58,8 @@ export class CheckoutComponent implements OnInit {
   }
 
   confirmPayment(){
+    // var today = new Date();
+    // console.log(String(today))
     if(this.donation.value.amount == 0) {
       this.dialog.open(ConfirmationComponent, {
         panelClass: 'myapp-no-padding-dialog',
