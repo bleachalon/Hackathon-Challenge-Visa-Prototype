@@ -6,10 +6,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item active">
-          <a class="nav-link" routerLink="/home">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-link" routerLink="/home">Home</a>
         </li>
         <li class="nav-item" *ngIf="!accountServices.login">
-          <a class="nav-link" routerLink="/sign-in">Login</a>
+          <a class="nav-link" (click)="openLogin()">Login</a>
         </li>
         <li class="nav-item" *ngIf="!accountServices.login">
           <a class="nav-link" routerLink="/register">Register</a>
@@ -22,10 +22,10 @@
           <a class="nav-link" routerLink="/transactions">Profile</a>
         </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
+      <!-- <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
-      </form>
+      </form> -->
     </div>
   </nav>
 

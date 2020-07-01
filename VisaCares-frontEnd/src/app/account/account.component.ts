@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AccountServices } from '../services/accountServices';
 
 @Component({
   selector: 'app-account',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private accountService: AccountServices
+  ) { }
 
   ngOnInit(): void {
   }
 
+  getTaxForm() {
+    this.accountService.getTaxForm();
+  }
 }

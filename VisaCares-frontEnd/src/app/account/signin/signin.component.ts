@@ -3,6 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { AccountServices } from 'src/app/services/accountServices';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ConfirmationComponent } from 'src/app/navbar/confirmation/confirmation.component';
 // import { RegisterComponent } from '../register/register.component';
 
 @Component({
@@ -18,7 +19,8 @@ export class SigninComponent implements OnInit {
     public dialogRef: MatDialogRef<SigninComponent>,
     private accountSerivces: AccountServices,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -43,6 +45,14 @@ export class SigninComponent implements OnInit {
   async signin() {
     const res = await this.accountSerivces.signin(this.user.value);
     if (res.status != 200) { this.status = true; }
-    if (res.status == 200) { this.accountSerivces.login = true; this.dialogRef.close(); }
+    if (res.status == 200) { this.accountSerivces.login = true; this.dialogRef.close(); 
+      this.dialog.open(ConfirmationComponent, {
+        panelClass: 'myapp-no-padding-dialog',
+        data: {
+            message: "Login Success!",
+            type: 'primary'
+          }
+      });
+    }
   }
 }

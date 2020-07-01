@@ -1,12 +1,7 @@
-<mat-card fxLayoutGap>
+<section>
+    <!-- <p class="text-right" (click)="close()">X</p> -->
+    <div *ngIf="data.type == 'danger'" class="alert alert-danger m-0" role="alert"> {{data.message}}  </div>
+    <div *ngIf="data.type == 'primary'" class="alert alert-primary m-0" role="alert"> {{data.message}}  </div>
 
-    <p mat-dialog-title>{{data.title}}</p>
+</section>
 
-    <p display-2>{{data.message}} ${{data.amount}}</p>
-
-
-    <div mat-dialog-actions class="row justify-content-between px-3">
-        <button class= "btn btn-secondary" (click)="onDismiss()">No</button>
-        <button class= "btn btn-secondary" (click)="onConfirm()">Yes</button>
-    </div>
-</mat-card>

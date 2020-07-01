@@ -59,21 +59,17 @@ export class CheckoutComponent implements OnInit {
   }
 
   confirmPayment(){
-    if(this.donation.value.amount == 0) { alert('please enter an amount of none 0'); return; }
-
-    const dialogRef = this.dialog.open(ConfirmationComponent, {
-      maxWidth: "400px",
-      data: {
-          title: "Are you sure?",
-          message: "You are about to DONATE!",
-          amount: this.donation.value.amount
-        }
-    });
-  
-    dialogRef.afterClosed().subscribe(dialogResult => {
-      if(dialogResult == true) { console.log('1'); this.onVisaCheckoutReady(); }
-   });
-  
+    if(this.donation.value.amount == 0) {
+      this.dialog.open(ConfirmationComponent, {
+        panelClass: 'myapp-no-padding-dialog',
+        data: {
+            message: "please enter an amount of none $0",
+            type: 'danger'
+          }
+      });
+      return; 
+    }
+    this.onVisaCheckoutReady(); 
   }
 
   onVisaCheckoutReady(){
@@ -99,7 +95,13 @@ export class CheckoutComponent implements OnInit {
       console.log(res);
       if (res.ok === true) {
         this.accountServices.postTransaction({amount: payment, date: String(today.getDate())})
-        alert("Payment Success!");
+        this.dialog.open(ConfirmationComponent, {
+          panelClass: 'myapp-no-padding-dialog',
+          data: {
+              message: "Thank you for Donation!",
+              type: 'primary'
+            }
+        });
         console.log(res.json());
       }
     }
