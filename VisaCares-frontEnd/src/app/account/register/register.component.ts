@@ -4,6 +4,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { AccountServices } from 'src/app/services/accountServices';
 import { FormBuilder } from '@angular/forms';
 import { SigninComponent } from '../signin/signin.component';
+import { ConfirmationComponent } from 'src/app/navbar/confirmation/confirmation.component';
 
 @Component({
   selector: 'app-register',

@@ -58,8 +58,16 @@ export class CheckoutComponent implements OnInit {
   }
 
   confirmPayment(){
-    if(this.donation.value.amount == 0) { alert('please enter an amount of none 0'); return; }
-
+    if(this.donation.value.amount == 0) {
+      this.dialog.open(ConfirmationComponent, {
+        panelClass: 'myapp-no-padding-dialog',
+        data: {
+            message: "please enter an amount of none $0",
+            type: 'danger'
+          }
+      });
+      return; 
+    }
     const dialogRef = this.dialog.open(ConfirmationComponent, {
       maxWidth: "400px",
       data: {
@@ -73,7 +81,7 @@ export class CheckoutComponent implements OnInit {
       if(dialogResult == true){
         this.onVisaCheckoutReady();
       }
-    });
+    }); 
   }
 
   onVisaCheckoutReady(){
@@ -83,7 +91,8 @@ export class CheckoutComponent implements OnInit {
     paymentRequest:{
       currencyCode: "USD",
       subtotal: this.donation.value.amount
-    }
+    },
+    dataLevel: "FULL"
     });
     V.on("payment.success", (payment) => this.sendEncrypt(payment));
     V.on("payment.cancel", (payment) => console.log(payment));
@@ -92,11 +101,13 @@ export class CheckoutComponent implements OnInit {
 
   finishedPayment(){
     const dialogRef = this.dialog.open(ConfirmationComponent, {
+          panelClass: 'myapp-no-padding-dialog',
           maxWidth: "600px",
           data: {
               title: "Thank you",
               message: "Thank you for donating to charity",
               amount: this.donation.value.amount,
+              type: 'primary',
               hide: true
             }
         });

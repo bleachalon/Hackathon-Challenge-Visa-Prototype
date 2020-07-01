@@ -42,4 +42,16 @@ export class AccountServices {
         return fetch(this.url + 'transactions').then(res => res.json());
     }
 
+    getTaxForm() {
+        return fetch(this.url + 'taxform', {
+            method: 'POST',
+            body: JSON.stringify({filename: 'myfile222.pdf'}),
+            headers: { 'content-type': 'application/json' }
+        }).then(res => res.blob())
+        .then( blob => {
+            var file = window.URL.createObjectURL(blob);
+            // window.location.assign(file);
+            window.open(file, '_blank');
+          });
+    }
 }

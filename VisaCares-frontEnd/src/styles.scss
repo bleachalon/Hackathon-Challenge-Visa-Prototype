@@ -3,3 +3,7 @@ label { color: #4a4a4a; }
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.myapp-no-padding-dialog .mat-dialog-container {
+    padding: 0;
+  }

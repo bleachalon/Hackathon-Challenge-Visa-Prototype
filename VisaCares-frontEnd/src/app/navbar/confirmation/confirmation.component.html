@@ -2,7 +2,10 @@
     <button class="close" mat-button (click)="onDismiss()">X</button>
     <p mat-dialog-title>{{data.title}}</p>
 
-    <p display-2>{{data.message}}</p>
+    <section>
+      <div *ngIf="data.type == 'danger'" class="alert alert-danger m-0" role="alert"> {{data.message}}  </div>
+      <div *ngIf="data.type == 'primary'" class="alert alert-primary m-0" role="alert"> {{data.message}}  </div>
+    </section>
 
 
     <div mat-dialog-actions *ngIf="!data.hide" class="row justify-content-between px-3">
