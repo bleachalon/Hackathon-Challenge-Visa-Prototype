@@ -51,10 +51,11 @@ export class CheckoutComponent implements OnInit {
 
   chooseAmount(event: any) {
     this.donation.value.amount = event.target.value - this.total;
-  }
+    console.log(this.donation.value);
+  } 
 
   submitDonation() {
-    this.checkoutServices.postCheckoutInfo(this.donation.value);
+    this.checkoutServices.postCheckoutInfo(this.donation.value);  
   }
 
   confirmPayment(){
@@ -70,20 +71,7 @@ export class CheckoutComponent implements OnInit {
       });
       return; 
     }
-    const dialogRef = this.dialog.open(ConfirmationComponent, {
-      maxWidth: "400px",
-      data: {
-          title: "Are you sure?",
-          message: "You are about to donate $" + this.donation.value.amount + "?",
-          hide: false
-        }
-    });
-
-    dialogRef.afterClosed().subscribe(dialogResult => {
-      if(dialogResult == true){
-        this.onVisaCheckoutReady();
-      }
-    }); 
+    this.onVisaCheckoutReady(); 
   }
 
   onVisaCheckoutReady(){
@@ -99,21 +87,7 @@ export class CheckoutComponent implements OnInit {
     V.on("payment.success", (payment) => this.sendEncrypt(payment));
     V.on("payment.cancel", (payment) => console.log(payment));
     V.on("payment.error", (payment) => console.log(payment));
-   }
-
-  finishedPayment(){
-    const dialogRef = this.dialog.open(ConfirmationComponent, {
-          panelClass: 'myapp-no-padding-dialog',
-          maxWidth: "600px",
-          data: {
-              title: "Thank you",
-              message: "Thank you for donating to charity",
-              amount: this.donation.value.amount,
-              type: 'primary',
-              hide: true
-            }
-        });
-  }
+    }
 
   private async sendEncrypt(payment) {
     try {
@@ -121,8 +95,16 @@ export class CheckoutComponent implements OnInit {
       var res;
       res = await this.checkoutServices.sendEncrypt(payment);
       if (res.ok === true) {
-        this.accountServices.postTransaction({amount: payment, date: String(today.getDate())});
-        this.finishedPayment();
+        // console.log(payment.vInitRequest.paymentRequest.subtotal)
+        this.accountServices.postTransaction({amount: payment.vInitRequest.paymentRequest.subtotal, date: String(today)})
+        this.dialog.open(ConfirmationComponent, {
+          panelClass: 'myapp-no-padding-dialog',
+          data: {
+              message: "Thank you for Donation!",
+              type: 'primary'
+            }
+        });
+        console.log(res.json());
       }
     }
     catch(err) {

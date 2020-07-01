@@ -1,15 +1,7 @@
-<mat-card fxLayoutGap>
-    <button class="close" mat-button (click)="onDismiss()">X</button>
-    <p mat-dialog-title>{{data.title}}</p>
+<section>
+    <!-- <p class="text-right" (click)="close()">X</p> -->
+    <div *ngIf="data.type == 'danger'" class="alert alert-danger m-0" role="alert"> {{data.message}}  </div>
+    <div *ngIf="data.type == 'primary'" class="alert alert-primary m-0" role="alert"> {{data.message}}  </div>
 
-    <section>
-      <div *ngIf="data.type == 'danger'" class="alert alert-danger m-0" role="alert"> {{data.message}}  </div>
-      <div *ngIf="data.type == 'primary'" class="alert alert-primary m-0" role="alert"> {{data.message}}  </div>
-    </section>
+</section>
 
-
-    <div mat-dialog-actions *ngIf="!data.hide" class="row justify-content-between px-3">
-        <button class= "btn btn-secondary" (click)="onDismiss()">No</button>
-        <button class= "btn btn-secondary" (click)="onConfirm()">Yes</button>
-    </div>
-</mat-card>
