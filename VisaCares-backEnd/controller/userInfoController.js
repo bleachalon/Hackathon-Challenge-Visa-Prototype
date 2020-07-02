@@ -36,7 +36,7 @@ module.exports = function (app) {
 
         console.log(tmp);
 
-        transactionData.push(tmp)
+        transactionData.unshift(tmp);
         return res.status(200).json({
             code: 1,
             message: "success",
