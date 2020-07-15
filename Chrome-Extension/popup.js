@@ -15,7 +15,7 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
 
     function redirectUser() {
         //console.log("http://localhost:4200/checkout/" + priceString);
-        window.open("https://bleachalon.github.io/VisaCares-frontend/checkout/" + priceString);
+        window.open("http://localhost:4200/checkout/" + priceString);
     }
 });
 

@@ -187,7 +187,7 @@ var data1 = {
         "name": "Visa Inc. USA-Foster City",
         "terminalId": "TID-9999"
     },
-    "localTransactionDateTime": "2020-07-02T00:22:58",
+    "localTransactionDateTime": "2020-07-15T21:01:58",
     "merchantCategoryCode": "6012",
     "pointOfServiceData": {
         "motoECIIndicator": "0",
@@ -241,7 +241,7 @@ var data2 = {
     },
     "cavv": "0700100038238906000013405823891061668252",
     "foreignExchangeFeeTransaction": "11.99",
-    "localTransactionDateTime": "2020-07-02T00:22:58",
+    "localTransactionDateTime": "2020-07-15T21:01:58",
     "retrievalReferenceNumber": "330000550000",
     "senderCardExpiryDate": "2015-10",
     "senderCurrencyCode": "USD",
